@@ -1,0 +1,32 @@
+[
+  {
+    "seed": 12345,
+    "difficulty": 2,
+    "type": "add",
+    "description": "Exercice facile d'addition de fractions"
+  },
+  {
+    "seed": 67890,
+    "difficulty": 3,
+    "type": "subtract",
+    "description": "Exercice facile de soustraction de fractions"
+  },
+  {
+    "seed": 11111,
+    "difficulty": 5,
+    "type": "add",
+    "description": "Exercice moyen d'addition de fractions"
+  },
+  {
+    "seed": 22222,
+    "difficulty": 7,
+    "type": "subtract",
+    "description": "Exercice difficile de soustraction de fractions"
+  },
+  {
+    "seed": 99999,
+    "difficulty": 9,
+    "type": "add",
+    "description": "Exercice très difficile d'addition de fractions"
+  }
+]

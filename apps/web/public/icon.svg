@@ -1,0 +1,58 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="castleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)"/>
+
+  <!-- Castle -->
+  <g transform="translate(256, 280)">
+    <!-- Main tower -->
+    <rect x="-80" y="-120" width="160" height="140" fill="url(#castleGradient)" rx="8"/>
+
+    <!-- Battlements -->
+    <rect x="-90" y="-130" width="30" height="20" fill="url(#castleGradient)"/>
+    <rect x="-50" y="-130" width="30" height="20" fill="url(#castleGradient)"/>
+    <rect x="-10" y="-130" width="30" height="20" fill="url(#castleGradient)"/>
+    <rect x="30" y="-130" width="30" height="20" fill="url(#castleGradient)"/>
+    <rect x="70" y="-130" width="30" height="20" fill="url(#castleGradient)"/>
+
+    <!-- Windows -->
+    <rect x="-50" y="-90" width="30" height="40" fill="#4f46e5" rx="4"/>
+    <rect x="20" y="-90" width="30" height="40" fill="#4f46e5" rx="4"/>
+    <rect x="-15" y="-50" width="30" height="40" fill="#4f46e5" rx="4"/>
+
+    <!-- Door -->
+    <path d="M -30 20 L -30 -10 Q -30 -20, -20 -20 L 20 -20 Q 30 -20, 30 -10 L 30 20 Z" fill="#78350f"/>
+
+    <!-- Side towers -->
+    <rect x="-120" y="-80" width="35" height="100" fill="#ea580c" rx="4"/>
+    <rect x="85" y="-80" width="35" height="100" fill="#ea580c" rx="4"/>
+
+    <!-- Tower tops -->
+    <polygon points="-102,-80 -102,-100 -120,-85" fill="#dc2626"/>
+    <polygon points="102,-80 102,-100 120,-85" fill="#dc2626"/>
+  </g>
+
+  <!-- Math symbols -->
+  <g transform="translate(256, 140)" fill="#fbbf24" font-family="Arial, sans-serif" font-weight="bold" font-size="60">
+    <text x="-60" y="0" text-anchor="middle">+</text>
+    <text x="0" y="0" text-anchor="middle">×</text>
+    <text x="60" y="0" text-anchor="middle">÷</text>
+  </g>
+
+  <!-- Sparkles -->
+  <circle cx="120" cy="120" r="6" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="390" cy="130" r="8" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="100" cy="380" r="7" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="410" cy="390" r="6" fill="#fbbf24" opacity="0.8"/>
+</svg>
