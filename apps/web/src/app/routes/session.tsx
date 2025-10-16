@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { RPGCard } from '@/components/RPGCard';
-import { IdleGameDisplay } from '@/components/IdleGameDisplay';
+import { SimpleExerciseDisplay } from '@/components/SimpleExerciseDisplay';
 import { HintDrawer } from '@/components/HintDrawer';
 import { useCharacter } from '@/contexts/CharacterContext';
 import {
@@ -623,13 +623,13 @@ export default function Session() {
         </div>
       </motion.div>
 
-      {/* Idle Game Display */}
+      {/* Simple Exercise Display */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <IdleGameDisplay
+        <SimpleExerciseDisplay
           question={exercise.question}
           onValidate={handleValidate}
           onRequestHint={handleRequestHint}
