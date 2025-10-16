@@ -7,7 +7,7 @@ import { Shop } from '@/components/Shop';
 import { InventoryDrawer } from '@/components/InventoryDrawer';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { getItemById, COURSE_CHAPTERS } from '@math-app/core';
-import { Swords, BookOpen, Library, Target, TrendingUp, CheckCircle2, Sparkles } from 'lucide-react';
+import { Swords, BookOpen, Library, Target, CheckCircle2, Sparkles } from 'lucide-react';
 
 // Mock data - in production, fetch from Firebase
 const mockSkills = [
@@ -17,7 +17,11 @@ const mockSkills = [
   { id: 'fractions_division', name: 'Division de fractions', mastery: 30 },
   { id: 'relative_numbers_addition', name: 'Addition de nombres relatifs', mastery: 60 },
   { id: 'relative_numbers_subtraction', name: 'Soustraction de nombres relatifs', mastery: 55 },
-  { id: 'relative_numbers_multiplication', name: 'Multiplication de nombres relatifs', mastery: 50 },
+  {
+    id: 'relative_numbers_multiplication',
+    name: 'Multiplication de nombres relatifs',
+    mastery: 50,
+  },
   { id: 'relative_numbers_division', name: 'Division de nombres relatifs', mastery: 40 },
 ];
 
@@ -38,7 +42,7 @@ export default function Dashboard() {
   useEffect(() => {
     // Calculate stats
     const totalExercises = 156; // Would come from Firebase
-    const skillsMastered = mockSkills.filter(s => s.mastery >= 80).length;
+    const skillsMastered = mockSkills.filter((s) => s.mastery >= 80).length;
     const totalLessons = COURSE_CHAPTERS.reduce((sum, ch) => sum + ch.lessons.length, 0);
     const lessonsCompleted = Math.floor(totalLessons * 0.35); // Mock 35% completed
 
@@ -71,18 +75,20 @@ export default function Dashboard() {
           <Swords size={16} className="rotate-180" />
           Retour au tableau de bord
         </button>
-        <Shop
-          coins={character.coins}
-          inventory={character.inventory}
-          onPurchase={handlePurchase}
-        />
+        <Shop coins={character.coins} inventory={character.inventory} onPurchase={handlePurchase} />
       </div>
     );
   }
 
   const questProgress = Math.min(100, Math.round((stats.totalExercises / 200) * 100));
-  const grimoireProgress = Math.min(100, Math.round((stats.skillsMastered / stats.totalSkills) * 100));
-  const libraryProgress = Math.min(100, Math.round((stats.lessonsCompleted / stats.totalLessons) * 100));
+  const grimoireProgress = Math.min(
+    100,
+    Math.round((stats.skillsMastered / stats.totalSkills) * 100)
+  );
+  const libraryProgress = Math.min(
+    100,
+    Math.round((stats.lessonsCompleted / stats.totalLessons) * 100)
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
@@ -99,7 +105,7 @@ export default function Dashboard() {
         >
           <div className="inline-block">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 bg-clip-text text-transparent mb-3 tracking-wide drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]">
-              TAVERNE DE L'AVENTURIER
+              TAVERNE DE L&apos;AVENTURIER
             </h1>
             <div className="h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent rounded-full" />
           </div>
@@ -225,7 +231,9 @@ export default function Dashboard() {
                               <Sparkles size={16} className="text-purple-400" />
                               <span>Compétences maîtrisées</span>
                             </div>
-                            <span className="font-bold text-white">{stats.skillsMastered}/{stats.totalSkills}</span>
+                            <span className="font-bold text-white">
+                              {stats.skillsMastered}/{stats.totalSkills}
+                            </span>
                           </div>
 
                           {/* Progress bar */}
@@ -297,7 +305,9 @@ export default function Dashboard() {
                               <CheckCircle2 size={16} className="text-indigo-400" />
                               <span>Leçons complétées</span>
                             </div>
-                            <span className="font-bold text-white">{stats.lessonsCompleted}/{stats.totalLessons}</span>
+                            <span className="font-bold text-white">
+                              {stats.lessonsCompleted}/{stats.totalLessons}
+                            </span>
                           </div>
 
                           {/* Progress bar */}

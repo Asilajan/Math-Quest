@@ -63,7 +63,7 @@ export async function updateSkillMastery(
 /**
  * Save attempt to Firestore
  */
-export async function saveAttempt(userId: string, attempt: any) {
+export async function saveAttempt(userId: string, attempt: Record<string, unknown>) {
   const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
   const attemptsRef = collection(db, 'users', userId, 'attempts');
   await addDoc(attemptsRef, {
@@ -116,7 +116,7 @@ export async function getUserStreak(userId: string): Promise<number> {
   // Calculate consecutive days
   const attempts = snapshot.docs.map((doc) => doc.data());
   let streak = 1;
-  let currentDate = new Date();
+  const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
   for (let i = 0; i < attempts.length; i++) {
@@ -150,7 +150,7 @@ export async function getCharacter(userId: string) {
 /**
  * Update character data in Firestore
  */
-export async function updateCharacter(userId: string, characterData: any) {
+export async function updateCharacter(userId: string, characterData: Record<string, unknown>) {
   const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
   const characterRef = doc(db, 'users', userId, 'game', 'character');
   await setDoc(
@@ -166,11 +166,14 @@ export async function updateCharacter(userId: string, characterData: any) {
 /**
  * Listen to character changes in real-time
  */
-export function onCharacterChange(userId: string, callback: (character: any) => void) {
-  const { doc, onSnapshot } = require('firebase/firestore');
+export async function onCharacterChange(
+  userId: string,
+  callback: (character: Record<string, unknown>) => void
+) {
+  const { doc, onSnapshot } = await import('firebase/firestore');
   const characterRef = doc(db, 'users', userId, 'game', 'character');
 
-  return onSnapshot(characterRef, (docSnap: any) => {
+  return onSnapshot(characterRef, (docSnap) => {
     if (docSnap.exists()) {
       callback(docSnap.data());
     }

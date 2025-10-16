@@ -13,9 +13,8 @@ interface PixelCharacterProps {
 export function PixelCharacter({
   size = 160,
   equipped = {},
-  animated = true
+  animated = true,
 }: PixelCharacterProps) {
-  const container = animated ? motion.div : 'div';
   const animationProps = animated
     ? {
         animate: {
@@ -82,10 +81,10 @@ export function PixelCharacter({
   };
 
   return (
-    <container
+    <motion.div
       className="inline-flex items-center justify-center"
       style={{ width: size, height: size }}
-      {...animationProps}
+      {...(animated ? animationProps : {})}
     >
       <svg
         width={size}
@@ -226,7 +225,7 @@ export function PixelCharacter({
           </>
         )}
       </svg>
-    </container>
+    </motion.div>
   );
 }
 

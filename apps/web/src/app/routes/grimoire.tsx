@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { RPGCard } from '@/components/RPGCard';
 import { useCharacter } from '@/contexts/CharacterContext';
@@ -15,14 +14,9 @@ import {
   Variable,
   ChevronDown,
   CheckCircle,
-  Crown
+  Crown,
 } from 'lucide-react';
-import {
-  getMagicBySkill,
-  getElementColor,
-  MagicElement,
-  type MagicSpell
-} from '@math-app/core';
+import { getMagicBySkill, getElementColor, MagicElement } from '@math-app/core';
 
 // Mock skills data - would come from Firebase or be calculated from exercises
 const SKILLS_DATA = [
@@ -101,8 +95,7 @@ const SKILLS_DATA = [
 ];
 
 export default function Grimoire() {
-  const navigate = useNavigate();
-  const { character, updateSkillMastery } = useCharacter();
+  const { character } = useCharacter();
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['fractions']));
 
   const toggleCategory = (categoryId: string) => {
@@ -119,28 +112,60 @@ export default function Grimoire() {
 
   const categories = [
     { id: 'fractions', label: 'Fractions', icon: Sparkles, gradient: 'from-orange-600 to-red-600' },
-    { id: 'relative_numbers', label: 'Nombres relatifs', icon: Zap, gradient: 'from-yellow-600 to-orange-600' },
+    {
+      id: 'relative_numbers',
+      label: 'Nombres relatifs',
+      icon: Zap,
+      gradient: 'from-yellow-600 to-orange-600',
+    },
     { id: 'powers', label: 'Puissances', icon: Star, gradient: 'from-purple-600 to-pink-600' },
-    { id: 'equations', label: 'Équations', icon: Calculator, gradient: 'from-blue-600 to-cyan-600' },
-    { id: 'proportions', label: 'Proportionnalité', icon: Percent, gradient: 'from-green-600 to-emerald-600' },
-    { id: 'literal', label: 'Calcul littéral', icon: Variable, gradient: 'from-indigo-600 to-purple-600' },
+    {
+      id: 'equations',
+      label: 'Équations',
+      icon: Calculator,
+      gradient: 'from-blue-600 to-cyan-600',
+    },
+    {
+      id: 'proportions',
+      label: 'Proportionnalité',
+      icon: Percent,
+      gradient: 'from-green-600 to-emerald-600',
+    },
+    {
+      id: 'literal',
+      label: 'Calcul littéral',
+      icon: Variable,
+      gradient: 'from-indigo-600 to-purple-600',
+    },
+    { id: 'geometry', label: 'Géométrie', icon: TrendingUp, gradient: 'from-cyan-600 to-blue-600' },
+    {
+      id: 'statistics',
+      label: 'Statistiques',
+      icon: BookOpen,
+      gradient: 'from-purple-900 to-violet-800',
+    },
+    {
+      id: 'probability',
+      label: 'Probabilités',
+      icon: Sparkles,
+      gradient: 'from-pink-500 to-fuchsia-500',
+    },
   ];
 
   const getSkillsByCategory = (categoryId: string) => {
-    return SKILLS_DATA.filter(skill => skill.category === categoryId);
+    return SKILLS_DATA.filter((skill) => skill.category === categoryId);
   };
 
   const getSkillMastery = (skillId: string) => {
-    return character.skillMastery[skillId] || SKILLS_DATA.find(s => s.id === skillId)?.mastery || 0;
+    return (
+      character.skillMastery[skillId] || SKILLS_DATA.find((s) => s.id === skillId)?.mastery || 0
+    );
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <RPGCard variant="gold" glow>
           <div className="p-6">
             <div className="flex items-center justify-between">
@@ -152,13 +177,19 @@ export default function Grimoire() {
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">Arbre de Compétences</h1>
-                  <p className="text-yellow-100/70 text-sm mt-1">Maîtrise les compétences et débloque des magies élémentaires</p>
+                  <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">
+                    Arbre de Compétences
+                  </h1>
+                  <p className="text-yellow-100/70 text-sm mt-1">
+                    Maîtrise les compétences et débloque des magies élémentaires
+                  </p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-sm text-yellow-100/70">Magies débloquées</p>
-                <p className="text-3xl font-bold text-yellow-200">{character.unlockedMagic.length}</p>
+                <p className="text-3xl font-bold text-yellow-200">
+                  {character.unlockedMagic.length}
+                </p>
               </div>
             </div>
           </div>
@@ -186,11 +217,15 @@ export default function Grimoire() {
                   className="w-full p-4 flex items-center justify-between hover:bg-slate-700/30 transition-all group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`relative w-12 h-12 bg-gradient-to-br ${cat.gradient} rounded-lg flex items-center justify-center border-2 border-slate-600 group-hover:scale-110 transition-transform`}>
+                    <div
+                      className={`relative w-12 h-12 bg-gradient-to-br ${cat.gradient} rounded-lg flex items-center justify-center border-2 border-slate-600 group-hover:scale-110 transition-transform`}
+                    >
                       <Icon className="text-white" size={24} />
                     </div>
                     <div className="text-left">
-                      <h3 className="text-xl font-bold text-white uppercase tracking-wide">{cat.label}</h3>
+                      <h3 className="text-xl font-bold text-white uppercase tracking-wide">
+                        {cat.label}
+                      </h3>
                       <p className="text-sm text-slate-400">{categorySkills.length} compétences</p>
                     </div>
                   </div>
@@ -227,10 +262,14 @@ export default function Grimoire() {
                           >
                             {/* Epic glow for mastered skills */}
                             {mastery === 100 && (
-                              <div className={`absolute inset-0 bg-gradient-to-br ${elementColors?.gradient} opacity-20 rounded-lg blur-lg animate-pulse`} />
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-br ${elementColors?.gradient} opacity-20 rounded-lg blur-lg animate-pulse`}
+                              />
                             )}
 
-                            <div className={`relative bg-gradient-to-br from-slate-800 to-slate-900 border-2 ${mastery === 100 ? elementColors?.border : 'border-slate-600'} rounded-lg overflow-hidden shadow-lg transition-all hover:scale-105`}>
+                            <div
+                              className={`relative bg-gradient-to-br from-slate-800 to-slate-900 border-2 ${mastery === 100 ? elementColors?.border : 'border-slate-600'} rounded-lg overflow-hidden shadow-lg transition-all hover:scale-105`}
+                            >
                               {/* Corner decorations */}
                               <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-yellow-500/30" />
                               <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-yellow-500/30" />
@@ -239,7 +278,9 @@ export default function Grimoire() {
                                 {/* Skill header */}
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
-                                    <h3 className="text-lg font-bold text-white mb-2">{skill.name}</h3>
+                                    <h3 className="text-lg font-bold text-white mb-2">
+                                      {skill.name}
+                                    </h3>
                                     <div className="flex items-center gap-2">
                                       {mastery === 100 ? (
                                         <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold uppercase">
@@ -258,7 +299,9 @@ export default function Grimoire() {
                                 {/* Mastery bar */}
                                 <div className="space-y-2">
                                   <div className="flex items-center justify-between">
-                                    <span className="text-xs text-slate-300 font-semibold uppercase">Maîtrise</span>
+                                    <span className="text-xs text-slate-300 font-semibold uppercase">
+                                      Maîtrise
+                                    </span>
                                     <span className="text-sm font-bold text-white">{mastery}%</span>
                                   </div>
                                   <div className="relative h-3 bg-slate-800 rounded-full border border-slate-600 overflow-hidden">
@@ -273,10 +316,14 @@ export default function Grimoire() {
 
                                 {/* Magic unlock section */}
                                 {magic && (
-                                  <div className={`relative rounded-lg border-2 overflow-hidden ${isMagicUnlocked ? `${elementColors?.border} bg-gradient-to-br from-slate-900/80 to-slate-800/80` : 'border-slate-700 bg-slate-900/50'}`}>
+                                  <div
+                                    className={`relative rounded-lg border-2 overflow-hidden ${isMagicUnlocked ? `${elementColors?.border} bg-gradient-to-br from-slate-900/80 to-slate-800/80` : 'border-slate-700 bg-slate-900/50'}`}
+                                  >
                                     {/* Magic unlocked glow */}
                                     {isMagicUnlocked && (
-                                      <div className={`absolute inset-0 bg-gradient-to-br ${elementColors?.gradient} opacity-10 animate-pulse`} />
+                                      <div
+                                        className={`absolute inset-0 bg-gradient-to-br ${elementColors?.gradient} opacity-10 animate-pulse`}
+                                      />
                                     )}
 
                                     <div className="relative p-4 space-y-3">
@@ -284,14 +331,20 @@ export default function Grimoire() {
                                         <div className="flex items-center gap-2">
                                           <span className="text-2xl">{magic.icon}</span>
                                           <div>
-                                            <p className={`text-sm font-bold ${isMagicUnlocked ? elementColors?.text : 'text-slate-500'}`}>
+                                            <p
+                                              className={`text-sm font-bold ${isMagicUnlocked ? elementColors?.text : 'text-slate-500'}`}
+                                            >
                                               {magic.name}
                                             </p>
-                                            <p className="text-xs text-slate-500 uppercase">Magie {magic.element}</p>
+                                            <p className="text-xs text-slate-500 uppercase">
+                                              Magie {magic.element}
+                                            </p>
                                           </div>
                                         </div>
                                         {isMagicUnlocked ? (
-                                          <div className={`p-2 rounded-full ${elementColors?.border} bg-gradient-to-br ${elementColors?.gradient}`}>
+                                          <div
+                                            className={`p-2 rounded-full ${elementColors?.border} bg-gradient-to-br ${elementColors?.gradient}`}
+                                          >
                                             <CheckCircle className="text-white" size={20} />
                                           </div>
                                         ) : (
@@ -301,7 +354,9 @@ export default function Grimoire() {
                                         )}
                                       </div>
 
-                                      <p className={`text-xs ${isMagicUnlocked ? 'text-slate-300' : 'text-slate-600'}`}>
+                                      <p
+                                        className={`text-xs ${isMagicUnlocked ? 'text-slate-300' : 'text-slate-600'}`}
+                                      >
                                         {magic.description}
                                       </p>
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,11 +26,7 @@ export function CharacterCard({ character, onOpenShop, onOpenInventory }: Charac
       <CardContent className="space-y-4">
         {/* Character display */}
         <div className="flex justify-center p-6 bg-white rounded-lg border-2 border-indigo-100">
-          <PixelCharacter
-            size={128}
-            equipped={character.equippedItems}
-            animated={true}
-          />
+          <PixelCharacter size={128} equipped={character.equippedItems} animated={true} />
         </div>
 
         {/* Level and XP */}
@@ -65,7 +60,9 @@ export function CharacterCard({ character, onOpenShop, onOpenInventory }: Charac
         </div>
 
         {/* Equipped items info */}
-        {(character.equippedItems.hat || character.equippedItems.body || character.equippedItems.accessory) && (
+        {(character.equippedItems.hat ||
+          character.equippedItems.body ||
+          character.equippedItems.accessory) && (
           <div className="p-3 bg-white rounded-lg border border-indigo-200">
             <p className="text-xs font-semibold text-gray-600 mb-2">Items équipés :</p>
             <div className="space-y-1">
@@ -90,20 +87,11 @@ export function CharacterCard({ character, onOpenShop, onOpenInventory }: Charac
 
         {/* Action buttons */}
         <div className="grid grid-cols-2 gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onOpenInventory}
-            className="gap-2"
-          >
+          <Button variant="outline" size="sm" onClick={onOpenInventory} className="gap-2">
             <Settings size={16} />
             Équiper
           </Button>
-          <Button
-            size="sm"
-            onClick={onOpenShop}
-            className="gap-2"
-          >
+          <Button size="sm" onClick={onOpenShop} className="gap-2">
             <Coins size={16} />
             Boutique
           </Button>

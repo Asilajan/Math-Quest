@@ -57,7 +57,7 @@ export function IdleGameDisplay({
 
   // Animate sprite frames based on game state
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
 
     if (isAttacking) {
       // Attack animation (4 frames)
@@ -179,18 +179,15 @@ export function IdleGameDisplay({
         {/* Progress bar removed - Enemy handles its own movement */}
 
         {/* Hero Character - stays in position */}
-        <motion.div
-          className="absolute bottom-24 z-20"
-          style={{ left: '20%' }}
-        >
+        <motion.div className="absolute bottom-24 z-20" style={{ left: '20%' }}>
           <div
             className="relative"
             style={{
               width: '80px',
               height: '80px',
-              backgroundImage:
-                isAttacking ? 'url(/assets/forest/Attack-Sheet.png)' :
-                'url(/assets/forest/Idle-Sheet.png)',
+              backgroundImage: isAttacking
+                ? 'url(/assets/forest/Attack-Sheet.png)'
+                : 'url(/assets/forest/Idle-Sheet.png)',
               backgroundPosition: `${-frameIndex * 80}px 0`,
               backgroundSize: isAttacking ? '320px 80px' : '320px 80px',
               imageRendering: 'pixelated',
@@ -231,9 +228,7 @@ export function IdleGameDisplay({
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white/95" />
 
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-4 border-red-500">
-                <p className="text-2xl font-bold text-center text-gray-800">
-                  {question}
-                </p>
+                <p className="text-2xl font-bold text-center text-gray-800">{question}</p>
               </div>
             </motion.div>
           )}
@@ -264,7 +259,7 @@ export function IdleGameDisplay({
                   transition={{
                     duration: 1.5,
                     delay: i * 0.08,
-                    ease: "easeOut"
+                    ease: 'easeOut',
                   }}
                 >
                   <div className="relative">

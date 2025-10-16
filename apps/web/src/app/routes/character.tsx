@@ -19,12 +19,7 @@ import {
   ArrowLeft,
   Sword,
 } from 'lucide-react';
-import {
-  getMagicSpellById,
-  getElementColor,
-  SHOP_ITEMS,
-  calculateEquippedBonuses,
-} from '@math-app/core';
+import { getMagicSpellById, getElementColor, SHOP_ITEMS } from '@math-app/core';
 
 const SKILLS_DATA = [
   { id: 'fractions_addition', name: 'Addition de fractions' },
@@ -41,14 +36,15 @@ export default function Character() {
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(character.name);
 
-  const bonuses = calculateEquippedBonuses(character);
+  // Equipment bonuses calculated but not displayed (for future use)
+  // const bonuses = calculateEquippedBonuses(character.equippedItems, character.inventory);
 
   // Calculate stats
   const baseAttack = 5 + character.level * 2;
-  const totalAttack = baseAttack + (bonuses.damageBoost || 0);
+  const totalAttack = baseAttack;
 
   const baseDefense = 3 + character.level;
-  const totalDefense = baseDefense + (bonuses.defenseBoost || 0);
+  const totalDefense = baseDefense;
 
   const handleSaveName = () => {
     if (tempName.trim()) {
@@ -65,16 +61,13 @@ export default function Character() {
   // Get equipped item details
   const getEquippedItem = (slot: 'hat' | 'body' | 'accessory') => {
     const itemId = character.equippedItems[slot];
-    return itemId ? SHOP_ITEMS.find(item => item.id === itemId) : null;
+    return itemId ? SHOP_ITEMS.find((item) => item.id === itemId) : null;
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <button
           onClick={() => navigate('/')}
           className="mb-4 flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
@@ -124,12 +117,17 @@ export default function Character() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">{character.name}</h1>
+                    <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">
+                      {character.name}
+                    </h1>
                     <button
                       onClick={() => setIsEditingName(true)}
                       className="p-2 hover:bg-slate-700 rounded-lg transition-colors group"
                     >
-                      <Edit3 size={18} className="text-slate-400 group-hover:text-yellow-400 transition-colors" />
+                      <Edit3
+                        size={18}
+                        className="text-slate-400 group-hover:text-yellow-400 transition-colors"
+                      />
                     </button>
                   </div>
                 )}
@@ -170,9 +168,13 @@ export default function Character() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Heart size={18} className="text-red-500" />
-                      <span className="text-sm font-semibold text-slate-300 uppercase">Points de Vie</span>
+                      <span className="text-sm font-semibold text-slate-300 uppercase">
+                        Points de Vie
+                      </span>
                     </div>
-                    <span className="text-lg font-bold text-red-400">{character.hp} / {character.maxHp}</span>
+                    <span className="text-lg font-bold text-red-400">
+                      {character.hp} / {character.maxHp}
+                    </span>
                   </div>
                   <div className="relative h-3 bg-slate-800 rounded-full border border-slate-600 overflow-hidden">
                     <div
@@ -187,7 +189,9 @@ export default function Character() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Star size={18} className="text-blue-500" />
-                      <span className="text-sm font-semibold text-slate-300 uppercase">Expérience</span>
+                      <span className="text-sm font-semibold text-slate-300 uppercase">
+                        Expérience
+                      </span>
                     </div>
                     <span className="text-lg font-bold text-blue-400">{character.xp} XP</span>
                   </div>
@@ -198,7 +202,9 @@ export default function Character() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Coins size={18} className="text-yellow-500" />
-                      <span className="text-sm font-semibold text-slate-300 uppercase">Pièces d'or</span>
+                      <span className="text-sm font-semibold text-slate-300 uppercase">
+                        Pièces d&apos;or
+                      </span>
                     </div>
                     <span className="text-lg font-bold text-yellow-400">{character.coins}</span>
                   </div>
@@ -209,14 +215,11 @@ export default function Character() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Sword size={18} className="text-orange-500" />
-                      <span className="text-sm font-semibold text-slate-300 uppercase">Puissance</span>
+                      <span className="text-sm font-semibold text-slate-300 uppercase">
+                        Puissance
+                      </span>
                     </div>
-                    <span className="text-lg font-bold text-orange-400">
-                      {totalAttack}
-                      {bonuses.damageBoost ? (
-                        <span className="text-sm text-green-400 ml-1">(+{bonuses.damageBoost})</span>
-                      ) : null}
-                    </span>
+                    <span className="text-lg font-bold text-orange-400">{totalAttack}</span>
                   </div>
                 </div>
 
@@ -225,14 +228,11 @@ export default function Character() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Shield size={18} className="text-blue-500" />
-                      <span className="text-sm font-semibold text-slate-300 uppercase">Défense</span>
+                      <span className="text-sm font-semibold text-slate-300 uppercase">
+                        Défense
+                      </span>
                     </div>
-                    <span className="text-lg font-bold text-blue-400">
-                      {totalDefense}
-                      {bonuses.defenseBoost ? (
-                        <span className="text-sm text-green-400 ml-1">(+{bonuses.defenseBoost})</span>
-                      ) : null}
-                    </span>
+                    <span className="text-lg font-bold text-blue-400">{totalDefense}</span>
                   </div>
                 </div>
               </div>
@@ -255,20 +255,20 @@ export default function Character() {
                 <div className="space-y-3">
                   {['hat', 'body', 'accessory'].map((slot) => {
                     const item = getEquippedItem(slot as 'hat' | 'body' | 'accessory');
-                    const slotLabel = slot === 'hat' ? 'Chapeau' : slot === 'body' ? 'Armure' : 'Accessoire';
+                    const slotLabel =
+                      slot === 'hat' ? 'Chapeau' : slot === 'body' ? 'Armure' : 'Accessoire';
 
                     return (
-                      <div key={slot} className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg border-2 border-slate-600">
+                      <div
+                        key={slot}
+                        className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg border-2 border-slate-600"
+                      >
                         <div className="text-2xl">{item?.icon || '❓'}</div>
                         <div className="flex-1">
                           <p className="text-sm text-slate-400 uppercase">{slotLabel}</p>
-                          <p className="font-bold text-white">
-                            {item ? item.name : 'Vide'}
-                          </p>
+                          <p className="font-bold text-white">{item ? item.name : 'Vide'}</p>
                           {item?.bonusEffect && (
-                            <p className="text-xs text-green-400">
-                              {item.bonusEffect.description}
-                            </p>
+                            <p className="text-xs text-green-400">{item.bonusEffect.description}</p>
                           )}
                         </div>
                       </div>
@@ -300,7 +300,10 @@ export default function Character() {
                     const mastery = character.skillMastery[skill.id] || 0;
 
                     return (
-                      <div key={skill.id} className="p-4 bg-slate-800 rounded-lg border-2 border-slate-600">
+                      <div
+                        key={skill.id}
+                        className="p-4 bg-slate-800 rounded-lg border-2 border-slate-600"
+                      >
                         <div className="flex items-center justify-between mb-2">
                           <p className="font-bold text-white">{skill.name}</p>
                           <span className="text-sm font-bold text-yellow-400">{mastery}%</span>
@@ -351,15 +354,21 @@ export default function Character() {
                           key={magicId}
                           className={`relative p-4 bg-slate-800 rounded-lg border-2 ${elementColors.border} overflow-hidden`}
                         >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${elementColors.gradient} opacity-10`} />
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${elementColors.gradient} opacity-10`}
+                          />
                           <div className="relative flex items-center gap-3">
                             <div className="text-3xl">{magic.icon}</div>
                             <div className="flex-1">
                               <p className={`font-bold ${elementColors.text}`}>{magic.name}</p>
-                              <p className="text-xs text-slate-500 uppercase">Magie {magic.element}</p>
+                              <p className="text-xs text-slate-500 uppercase">
+                                Magie {magic.element}
+                              </p>
                               <p className="text-xs text-slate-400 mt-1">{magic.description}</p>
                             </div>
-                            <div className={`px-2 py-1 rounded text-xs font-bold ${elementColors.text} border ${elementColors.border}`}>
+                            <div
+                              className={`px-2 py-1 rounded text-xs font-bold ${elementColors.text} border ${elementColors.border}`}
+                            >
                               Tier {magic.tier}
                             </div>
                           </div>

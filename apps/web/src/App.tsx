@@ -1,8 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, Dumbbell, LogOut, User, Castle, Swords, BookOpen, Library, ShoppingBag, Coins } from 'lucide-react';
+import { LogOut, User, Castle, Swords, BookOpen, Library, ShoppingBag, Coins } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
 import { useCharacter } from './contexts/CharacterContext';
-import { Button } from './components/ui/button';
 
 function App() {
   const location = useLocation();
@@ -96,7 +95,9 @@ function App() {
                   }`}
                 >
                   <Library size={18} />
-                  <span className="font-semibold text-sm uppercase tracking-wide">Bibliothèque</span>
+                  <span className="font-semibold text-sm uppercase tracking-wide">
+                    Bibliothèque
+                  </span>
                   {location.pathname.startsWith('/library') && (
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-400/20 to-cyan-400/20 rounded-lg animate-pulse" />
                   )}

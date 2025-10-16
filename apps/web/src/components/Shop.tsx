@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { RPGCard } from './RPGCard';
-import { SHOP_CATALOG, ShopItem, getItemsByCategory } from '@math-app/core';
-import { Coins, ShoppingBag, Sparkles, Crown, Shirt, Glasses, Palette, Zap, Check } from 'lucide-react';
+import { ShopItem, getItemsByCategory } from '@math-app/core';
+import {
+  Coins,
+  ShoppingBag,
+  Sparkles,
+  Crown,
+  Shirt,
+  Glasses,
+  Palette,
+  Zap,
+  Check,
+} from 'lucide-react';
 
 interface ShopProps {
   coins: number;
@@ -79,8 +89,12 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
                 </div>
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-yellow-200 tracking-wide uppercase">Marchand d'Artefacts</h2>
-                <p className="text-yellow-100/70 text-sm">Équipe-toi pour tes quêtes mathématiques</p>
+                <h2 className="text-2xl font-bold text-yellow-200 tracking-wide uppercase">
+                  Marchand d&apos;Artefacts
+                </h2>
+                <p className="text-yellow-100/70 text-sm">
+                  Équipe-toi pour tes quêtes mathématiques
+                </p>
               </div>
             </div>
             <div className="relative">
@@ -154,7 +168,9 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg blur-lg" />
               )}
 
-              <div className={`relative bg-gradient-to-br ${getRarityGradient(item.rarity)} border-2 rounded-lg overflow-hidden shadow-lg ${getRarityGlow(item.rarity)} transition-all hover:scale-105 hover:shadow-2xl`}>
+              <div
+                className={`relative bg-gradient-to-br ${getRarityGradient(item.rarity)} border-2 rounded-lg overflow-hidden shadow-lg ${getRarityGlow(item.rarity)} transition-all hover:scale-105 hover:shadow-2xl`}
+              >
                 {/* Corner decorations */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-yellow-500/30" />
                 <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-yellow-500/30" />
@@ -178,23 +194,37 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
                   {/* Item header */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <Sparkles size={18} className={item.rarity === 'legendary' ? 'text-yellow-400' : item.rarity === 'epic' ? 'text-purple-400' : item.rarity === 'rare' ? 'text-blue-400' : 'text-slate-400'} />
+                      <Sparkles
+                        size={18}
+                        className={
+                          item.rarity === 'legendary'
+                            ? 'text-yellow-400'
+                            : item.rarity === 'epic'
+                              ? 'text-purple-400'
+                              : item.rarity === 'rare'
+                                ? 'text-blue-400'
+                                : 'text-slate-400'
+                        }
+                      />
                       <h3 className="text-lg font-bold text-white tracking-wide">{item.name}</h3>
                     </div>
-                    <div className={`inline-block px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${
-                      item.rarity === 'legendary' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' :
-                      item.rarity === 'epic' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' :
-                      item.rarity === 'rare' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
-                      'bg-slate-500/20 text-slate-300 border border-slate-500/30'
-                    }`}>
+                    <div
+                      className={`inline-block px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${
+                        item.rarity === 'legendary'
+                          ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                          : item.rarity === 'epic'
+                            ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                            : item.rarity === 'rare'
+                              ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                              : 'bg-slate-500/20 text-slate-300 border border-slate-500/30'
+                      }`}
+                    >
                       {getRarityLabel(item.rarity)}
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-200 min-h-[40px]">
-                    {item.description}
-                  </p>
+                  <p className="text-sm text-slate-200 min-h-[40px]">{item.description}</p>
 
                   {/* Bonus effect */}
                   {item.bonusEffect && (
@@ -204,7 +234,9 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
                         <div className="flex items-start gap-2">
                           <Zap size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />
                           <div>
-                            <p className="text-xs font-bold text-indigo-300 uppercase">Effet magique</p>
+                            <p className="text-xs font-bold text-indigo-300 uppercase">
+                              Effet magique
+                            </p>
                             <p className="text-xs text-slate-300 mt-1">
                               {getBonusDescription(item.bonusEffect)}
                             </p>
@@ -227,8 +259,8 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
                         owned
                           ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
                           : !affordable
-                          ? 'bg-red-900/50 text-red-300 border border-red-700 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg hover:shadow-green-500/50 hover:scale-105 active:scale-95'
+                            ? 'bg-red-900/50 text-red-300 border border-red-700 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-500 hover:to-emerald-500 shadow-lg hover:shadow-green-500/50 hover:scale-105 active:scale-95'
                       }`}
                     >
                       {owned ? 'Possédé' : !affordable ? 'Trop cher' : 'Acheter'}
@@ -245,8 +277,12 @@ export function Shop({ coins, inventory, onPurchase }: ShopProps) {
         <RPGCard>
           <div className="p-12 text-center">
             <ShoppingBag className="mx-auto text-slate-500 mb-4" size={48} />
-            <p className="text-slate-400 text-lg">Aucun artefact disponible dans cette catégorie.</p>
-            <p className="text-slate-500 text-sm mt-2">Reviens plus tard pour découvrir de nouveaux objets !</p>
+            <p className="text-slate-400 text-lg">
+              Aucun artefact disponible dans cette catégorie.
+            </p>
+            <p className="text-slate-500 text-sm mt-2">
+              Reviens plus tard pour découvrir de nouveaux objets !
+            </p>
           </div>
         </RPGCard>
       )}
@@ -258,19 +294,22 @@ function getBonusDescription(bonusEffect: ShopItem['bonusEffect']): string {
   if (!bonusEffect) return '';
 
   switch (bonusEffect.type) {
-    case 'xp_multiplier':
+    case 'xp_multiplier': {
       const xpBonus = Math.round((bonusEffect.value - 1) * 100);
       return bonusEffect.duration
         ? `+${xpBonus}% XP pendant ${bonusEffect.duration} exercices`
         : `+${xpBonus}% XP permanent`;
-    case 'coin_multiplier':
+    }
+    case 'coin_multiplier': {
       const coinBonus = Math.round((bonusEffect.value - 1) * 100);
       return bonusEffect.duration
         ? `+${coinBonus}% pièces pendant ${bonusEffect.duration} exercices`
         : `+${coinBonus}% pièces permanent`;
-    case 'hint_discount':
+    }
+    case 'hint_discount': {
       const discount = Math.round(bonusEffect.value * 100);
       return `${discount}% de réduction sur les indices`;
+    }
     case 'theme_unlock':
       return 'Débloque un nouveau thème';
     default:

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { RPGCard } from '@/components/RPGCard';
-import { Library, BookOpen, Clock, Award, ChevronRight, Sparkles } from 'lucide-react';
+import { Library, BookOpen, Clock, ChevronRight, Sparkles } from 'lucide-react';
 import { COURSE_CHAPTERS, CourseChapter } from '@math-app/core';
 import { Link } from 'react-router-dom';
 
@@ -73,6 +73,14 @@ function getThemeColors(theme: ChapterTheme) {
         icon: 'text-indigo-400',
         bg: 'from-indigo-900/80 to-purple-900/80',
       };
+    case 'crystal':
+      return {
+        gradient: 'from-pink-500 via-rose-400 to-fuchsia-500',
+        border: 'border-pink-500',
+        glow: 'shadow-pink-500/50',
+        icon: 'text-pink-400',
+        bg: 'from-pink-900/80 to-fuchsia-900/80',
+      };
   }
 }
 
@@ -101,13 +109,13 @@ function getDifficultyLabel(difficulty: 'beginner' | 'intermediate' | 'advanced'
 export default function LibraryPage() {
   const [selectedChapter, setSelectedChapter] = useState<CourseChapter | null>(null);
 
+  console.log('COURSE_CHAPTERS:', COURSE_CHAPTERS);
+  console.log('Nombre de chapitres:', COURSE_CHAPTERS.length);
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <RPGCard variant="gold" glow>
           <div className="p-6">
             <div className="flex items-center gap-4">
@@ -118,8 +126,12 @@ export default function LibraryPage() {
                 </div>
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">Bibliothèque des Savoirs</h1>
-                <p className="text-yellow-100/70 text-sm mt-1">Explore les grimoires mathématiques et apprends les secrets des maîtres</p>
+                <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">
+                  Bibliothèque des Savoirs
+                </h1>
+                <p className="text-yellow-100/70 text-sm mt-1">
+                  Explore les grimoires mathématiques et apprends les secrets des maîtres
+                </p>
               </div>
             </div>
           </div>
@@ -139,22 +151,23 @@ export default function LibraryPage() {
           </button>
 
           {/* Chapter Header */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
             <RPGCard variant="gold">
               <div className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="text-5xl">{selectedChapter.icon}</div>
                   <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-yellow-200 mb-2">{selectedChapter.title}</h2>
+                    <h2 className="text-2xl font-bold text-yellow-200 mb-2">
+                      {selectedChapter.title}
+                    </h2>
                     <p className="text-slate-300">{selectedChapter.description}</p>
                     <div className="flex items-center gap-3 mt-4">
                       <span className="px-3 py-1 bg-indigo-900/50 border border-indigo-500 rounded-full text-xs font-semibold text-indigo-300 uppercase">
                         {selectedChapter.gradeLevel}
                       </span>
-                      <span className="text-slate-400 text-sm">{selectedChapter.lessons.length} leçons</span>
+                      <span className="text-slate-400 text-sm">
+                        {selectedChapter.lessons.length} leçons
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -176,7 +189,9 @@ export default function LibraryPage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <Link to={`/library/lesson/${lesson.id}`}>
-                    <div className={`relative bg-gradient-to-br ${themeColors.bg} border-2 ${themeColors.border} rounded-lg overflow-hidden shadow-lg ${themeColors.glow} transition-all hover:scale-105 cursor-pointer`}>
+                    <div
+                      className={`relative bg-gradient-to-br ${themeColors.bg} border-2 ${themeColors.border} rounded-lg overflow-hidden shadow-lg ${themeColors.glow} transition-all hover:scale-105 cursor-pointer`}
+                    >
                       {/* Corner decorations */}
                       <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-yellow-500/30" />
                       <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-yellow-500/30" />
@@ -197,7 +212,9 @@ export default function LibraryPage() {
 
                         {/* Meta info */}
                         <div className="flex items-center gap-3 text-xs">
-                          <div className={`px-2 py-1 rounded border ${difficultyColor} font-semibold uppercase`}>
+                          <div
+                            className={`px-2 py-1 rounded border ${difficultyColor} font-semibold uppercase`}
+                          >
                             {getDifficultyLabel(lesson.difficulty)}
                           </div>
                           <div className="flex items-center gap-1 text-slate-400">
@@ -250,9 +267,13 @@ export default function LibraryPage() {
               >
                 <div className="relative group">
                   {/* Glow effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${themeColors.gradient} opacity-20 rounded-lg blur-xl group-hover:opacity-30 transition-opacity`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${themeColors.gradient} opacity-20 rounded-lg blur-xl group-hover:opacity-30 transition-opacity`}
+                  />
 
-                  <div className={`relative bg-gradient-to-br ${themeColors.bg} border-2 ${themeColors.border} rounded-lg overflow-hidden shadow-lg ${themeColors.glow} transition-all group-hover:scale-105`}>
+                  <div
+                    className={`relative bg-gradient-to-br ${themeColors.bg} border-2 ${themeColors.border} rounded-lg overflow-hidden shadow-lg ${themeColors.glow} transition-all group-hover:scale-105`}
+                  >
                     {/* Decorative corners */}
                     <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-yellow-500/40" />
                     <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-yellow-500/40" />
@@ -263,8 +284,12 @@ export default function LibraryPage() {
                       {/* Icon and Title */}
                       <div className="space-y-3">
                         <div className="relative">
-                          <div className={`absolute inset-0 bg-gradient-to-br ${themeColors.gradient} rounded-full blur opacity-40`} />
-                          <div className={`relative w-20 h-20 bg-gradient-to-br ${themeColors.gradient} rounded-full flex items-center justify-center border-4 ${themeColors.border} mx-auto text-5xl`}>
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${themeColors.gradient} rounded-full blur opacity-40`}
+                          />
+                          <div
+                            className={`relative w-20 h-20 bg-gradient-to-br ${themeColors.gradient} rounded-full flex items-center justify-center border-4 ${themeColors.border} mx-auto text-5xl`}
+                          >
                             {chapter.icon}
                           </div>
                         </div>
@@ -278,7 +303,9 @@ export default function LibraryPage() {
                       <div className="flex items-center justify-center gap-4 pt-3 border-t border-slate-600/50">
                         <div className="flex items-center gap-1.5 text-slate-400">
                           <BookOpen size={16} />
-                          <span className="text-sm font-semibold">{chapter.lessons.length} leçons</span>
+                          <span className="text-sm font-semibold">
+                            {chapter.lessons.length} leçons
+                          </span>
                         </div>
                         <span className="px-2 py-1 bg-indigo-900/50 border border-indigo-500 rounded text-xs font-bold text-indigo-300 uppercase">
                           {chapter.gradeLevel}

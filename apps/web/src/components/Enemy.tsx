@@ -26,18 +26,18 @@ interface EnemyProps {
 // Configuration constante
 const CONFIG = {
   // Spawn
-  SPAWN_OFFSET: 50,          // Distance hors écran à droite
+  SPAWN_OFFSET: 50, // Distance hors écran à droite
 
   // Mouvement
-  MOVE_SPEED: 1.5,           // Pixels par frame
+  MOVE_SPEED: 1.5, // Pixels par frame
   COMBAT_POSITION_RATIO: 0.65, // Position d'arrêt (65% de la largeur)
-  STOP_THRESHOLD: 5,         // Distance pour considérer "arrivé"
+  STOP_THRESHOLD: 5, // Distance pour considérer "arrivé"
 
   // Sprite
   SPRITE_WIDTH: 96,
   SPRITE_HEIGHT: 64,
   BASE_SCALE: 2.5,
-  SPRITE_PADDING: 1,         // Padding pour éviter le texture bleeding
+  SPRITE_PADDING: 1, // Padding pour éviter le texture bleeding
 
   // Hitbox
   HITBOX_WIDTH: 80,
@@ -74,23 +74,12 @@ export function Enemy({
   const isMountedRef = useRef(true);
 
   // Position cible pour le combat (mémoïsée pour éviter les recalculs)
-  const targetX = useMemo(
-    () => canvasWidth * CONFIG.COMBAT_POSITION_RATIO,
-    [canvasWidth]
-  );
+  const targetX = useMemo(() => canvasWidth * CONFIG.COMBAT_POSITION_RATIO, [canvasWidth]);
 
   // Calcul de la taille basée sur la difficulté (arrondi pour éviter le rendu partiel)
   const scale = CONFIG.BASE_SCALE * (1 + difficulty * 0.05);
   const width = Math.round(CONFIG.SPRITE_WIDTH * scale);
   const height = Math.round(CONFIG.SPRITE_HEIGHT * scale);
-
-  // Hitbox
-  const hitbox = {
-    x: position.x + CONFIG.HITBOX_OFFSET_X * scale,
-    y: position.y + CONFIG.HITBOX_OFFSET_Y * scale,
-    width: CONFIG.HITBOX_WIDTH * scale,
-    height: CONFIG.HITBOX_HEIGHT * scale,
-  };
 
   // Garder les refs des callbacks à jour sans déclencher de re-render
   useEffect(() => {
@@ -197,11 +186,9 @@ export function Enemy({
   };
 
   // Déterminer les classes CSS
-  const containerClasses = [
-    'enemy-container',
-    state,
-    isBeingHit ? 'being-hit' : '',
-  ].filter(Boolean).join(' ');
+  const containerClasses = ['enemy-container', state, isBeingHit ? 'being-hit' : '']
+    .filter(Boolean)
+    .join(' ');
 
   // Arrondir les positions pour éviter le rendu partiel
   const roundedX = Math.round(position.x);

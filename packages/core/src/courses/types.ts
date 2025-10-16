@@ -35,7 +35,7 @@ export interface CourseChapter {
   id: string;
   title: string;
   description: string;
-  theme: 'fire' | 'water' | 'lightning' | 'ice' | 'earth' | 'wind' | 'shadow' | 'arcane';
+  theme: 'fire' | 'water' | 'lightning' | 'ice' | 'earth' | 'wind' | 'shadow' | 'arcane' | 'crystal';
   icon: string;
   lessons: CourseLesson[];
   order: number;

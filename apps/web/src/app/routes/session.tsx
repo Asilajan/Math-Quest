@@ -5,7 +5,22 @@ import { RPGCard } from '@/components/RPGCard';
 import { IdleGameDisplay } from '@/components/IdleGameDisplay';
 import { HintDrawer } from '@/components/HintDrawer';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { ArrowRight, Trophy, Clock, Zap, Star, TrendingUp, Swords, Coins, Sparkles, Scroll, Brain, Calculator, Percent, Variable, Skull, RotateCcw } from 'lucide-react';
+import {
+  Trophy,
+  Clock,
+  Zap,
+  Star,
+  Swords,
+  Coins,
+  Sparkles,
+  Scroll,
+  Brain,
+  Calculator,
+  Percent,
+  Variable,
+  Skull,
+  RotateCcw,
+} from 'lucide-react';
 import {
   genAddFractions,
   genSubtractFractions,
@@ -53,7 +68,13 @@ import {
 const CURRENT_MASTERY = 55;
 
 // Exercise types to practice
-type ExerciseType = 'fractions' | 'relative_numbers' | 'powers' | 'equations' | 'proportions' | 'literal';
+type ExerciseType =
+  | 'fractions'
+  | 'relative_numbers'
+  | 'powers'
+  | 'equations'
+  | 'proportions'
+  | 'literal';
 
 export default function Session() {
   const location = useLocation();
@@ -94,11 +115,13 @@ export default function Session() {
   // Load initial exercise
   useEffect(() => {
     loadNextExercise();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Reload exercise when exercise type changes
   useEffect(() => {
     loadNextExercise();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exerciseType]);
 
   // Auto-advance countdown timer
@@ -112,6 +135,7 @@ export default function Session() {
       // Countdown finished, load next exercise
       handleNextExercise();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdown, feedback, lastReward]);
 
   const loadNextExercise = () => {
@@ -124,9 +148,10 @@ export default function Session() {
     if (exerciseType === 'fractions') {
       // Randomly choose between addition and subtraction for fractions
       const operation = Math.random() > 0.5 ? 'add' : 'subtract';
-      newExercise = operation === 'add'
-        ? genAddFractions(seed, difficulty)
-        : genSubtractFractions(seed, difficulty);
+      newExercise =
+        operation === 'add'
+          ? genAddFractions(seed, difficulty)
+          : genSubtractFractions(seed, difficulty);
       solution = solveFraction(newExercise as FractionExercise);
     } else if (exerciseType === 'relative_numbers') {
       // Relative numbers: choose from all 4 operations
@@ -149,7 +174,7 @@ export default function Session() {
       ];
       const randomOp = operations[Math.floor(Math.random() * operations.length)];
       newExercise = randomOp();
-      solution = solvePowerExercise(newExercise as PowerExercise);
+      solution = solvePowerExercise(newExercise as PowerExercise).solution;
     } else if (exerciseType === 'equations') {
       // Equations: choose based on difficulty
       const operations = [
@@ -233,7 +258,8 @@ export default function Session() {
       loseHP();
 
       // Check for Game Over
-      if (character.hp <= 1) { // Will be 0 after loseHP()
+      if (character.hp <= 1) {
+        // Will be 0 after loseHP()
         setGameOver(true);
       }
 
@@ -246,13 +272,14 @@ export default function Session() {
         if (exercise.type === 'fraction') {
           const fracEx = exercise as FractionExercise;
           mockAiResponse = {
-            errorInsights: 'Il semble que tu aies fait une erreur de calcul lors de l\'addition des numérateurs.',
-            hint: 'Pense à trouver d\'abord un dénominateur commun avant d\'additionner les fractions.',
+            errorInsights:
+              "Il semble que tu aies fait une erreur de calcul lors de l'addition des numérateurs.",
+            hint: "Pense à trouver d'abord un dénominateur commun avant d'additionner les fractions.",
             firstStep: `Commence par trouver le PPCM de ${fracEx.operands[0].denominator} et ${fracEx.operands[1].denominator}.`,
           };
         } else {
           mockAiResponse = {
-            errorInsights: 'Vérifie les signes et l\'opération demandée.',
+            errorInsights: "Vérifie les signes et l'opération demandée.",
             hint: 'Rappelle-toi des règles sur les nombres relatifs.',
             firstStep: 'Identifie le signe de chaque nombre et applique la règle correspondante.',
           };
@@ -268,12 +295,12 @@ export default function Session() {
     if (aiCallsRemaining > 0) {
       setAiCallsRemaining((prev) => prev - 1);
       setHintsUsed((prev) => prev + 1);
-      
+
       // Simulate AI hint (in production, call real AI API)
       const mockHint = {
-        hint: 'Rappel : pour additionner des fractions, il faut qu\'elles aient le même dénominateur.',
+        hint: "Rappel : pour additionner des fractions, il faut qu'elles aient le même dénominateur.",
       };
-      
+
       setHintContent(mockHint);
       setHintDrawerOpen(true);
     }
@@ -304,7 +331,7 @@ export default function Session() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Chargement de l'exercice...</p>
+          <p className="text-gray-600">Chargement de l&apos;exercice...</p>
         </div>
       </div>
     );
@@ -312,7 +339,9 @@ export default function Session() {
 
   const getSkillName = () => {
     if (exercise.type === 'fraction') {
-      return exercise.skillId === 'fractions_addition' ? 'Addition de fractions' : 'Soustraction de fractions';
+      return exercise.skillId === 'fractions_addition'
+        ? 'Addition de fractions'
+        : 'Soustraction de fractions';
     } else if (exercise.type === 'relative_number') {
       const opNames: Record<string, string> = {
         relative_numbers_addition: 'Addition de nombres relatifs',
@@ -359,16 +388,15 @@ export default function Session() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Exercise Type Selector - RPG Style */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <RPGCard>
           <div className="p-4">
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <div className="flex items-center gap-2">
                 <Scroll className="text-yellow-400" size={20} />
-                <span className="text-sm font-bold text-slate-200 uppercase tracking-wide">Choisis ton défi :</span>
+                <span className="text-sm font-bold text-slate-200 uppercase tracking-wide">
+                  Choisis ton défi :
+                </span>
               </div>
               <div className="flex gap-3">
                 <button
@@ -486,10 +514,7 @@ export default function Session() {
       </motion.div>
 
       {/* Session Header - RPG Style */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <RPGCard variant="gold" glow>
           <div className="p-6">
             <div className="flex items-center justify-between flex-wrap gap-4">
@@ -501,7 +526,9 @@ export default function Session() {
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-yellow-200 tracking-wide uppercase">Quête en cours</h1>
+                  <h1 className="text-2xl font-bold text-yellow-200 tracking-wide uppercase">
+                    Quête en cours
+                  </h1>
                   <p className="text-yellow-100/70 text-sm mt-1">
                     <span className="font-semibold">Compétence :</span> {getSkillName()}
                   </p>
@@ -538,7 +565,9 @@ export default function Session() {
                 </div>
               </div>
               <div>
-                <p className="text-xs text-yellow-200/70 uppercase tracking-wide font-semibold">Trésor</p>
+                <p className="text-xs text-yellow-200/70 uppercase tracking-wide font-semibold">
+                  Trésor
+                </p>
                 <motion.p
                   key={score}
                   initial={{ scale: 1.2, color: '#fbbf24' }}
@@ -560,7 +589,9 @@ export default function Session() {
                 </div>
               </div>
               <div>
-                <p className="text-xs text-slate-300 uppercase tracking-wide font-semibold">Combats</p>
+                <p className="text-xs text-slate-300 uppercase tracking-wide font-semibold">
+                  Combats
+                </p>
                 <motion.p
                   key={exerciseCount}
                   initial={{ scale: 1.2 }}
@@ -582,7 +613,9 @@ export default function Session() {
                 </div>
               </div>
               <div>
-                <p className="text-xs text-orange-200/70 uppercase tracking-wide font-semibold">Niveau</p>
+                <p className="text-xs text-orange-200/70 uppercase tracking-wide font-semibold">
+                  Niveau
+                </p>
                 <p className="text-2xl font-bold text-orange-100">{exercise.difficulty}/10</p>
               </div>
             </div>
@@ -627,7 +660,7 @@ export default function Session() {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ type: "spring", duration: 0.6 }}
+                      transition={{ type: 'spring', duration: 0.6 }}
                       className="flex justify-center"
                     >
                       <div className="relative">
@@ -637,7 +670,9 @@ export default function Session() {
                         </div>
                       </div>
                     </motion.div>
-                    <h3 className="text-3xl font-bold text-green-300 uppercase tracking-wide">Victoire !</h3>
+                    <h3 className="text-3xl font-bold text-green-300 uppercase tracking-wide">
+                      Victoire !
+                    </h3>
                     <p className="text-green-100/70">Récompenses obtenues</p>
                   </div>
 
@@ -654,7 +689,9 @@ export default function Session() {
                         <div className="flex items-center gap-3">
                           <Sparkles className="text-purple-400" size={24} />
                           <div className="text-left">
-                            <p className="text-xs text-purple-300 uppercase font-semibold">Expérience</p>
+                            <p className="text-xs text-purple-300 uppercase font-semibold">
+                              Expérience
+                            </p>
                             <p className="text-2xl font-bold text-purple-100">+{lastReward.xp}</p>
                           </div>
                         </div>
@@ -673,7 +710,9 @@ export default function Session() {
                           <Coins className="text-yellow-400" size={24} />
                           <div className="text-left">
                             <p className="text-xs text-yellow-300 uppercase font-semibold">Or</p>
-                            <p className="text-2xl font-bold text-yellow-100">+{lastReward.coins}</p>
+                            <p className="text-2xl font-bold text-yellow-100">
+                              +{lastReward.coins}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -690,7 +729,8 @@ export default function Session() {
                     <div className="flex items-center justify-center gap-3 text-green-300">
                       <Clock size={18} className="animate-pulse" />
                       <p className="text-sm font-semibold">
-                        Prochain combat dans <span className="text-xl font-bold text-green-200">{countdown}</span>s
+                        Prochain combat dans{' '}
+                        <span className="text-xl font-bold text-green-200">{countdown}</span>s
                       </p>
                     </div>
                     <button
@@ -717,7 +757,7 @@ export default function Session() {
           <motion.div
             initial={{ scale: 0.8, y: 50 }}
             animate={{ scale: 1, y: 0 }}
-            transition={{ type: "spring", duration: 0.6 }}
+            transition={{ type: 'spring', duration: 0.6 }}
             className="relative max-w-lg w-full mx-4"
           >
             {/* Ominous glow effect */}
@@ -731,7 +771,7 @@ export default function Session() {
                     <motion.div
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
-                      transition={{ type: "spring", duration: 0.8, delay: 0.2 }}
+                      transition={{ type: 'spring', duration: 0.8, delay: 0.2 }}
                       className="flex justify-center"
                     >
                       <div className="relative">
@@ -766,7 +806,9 @@ export default function Session() {
                     transition={{ delay: 0.6 }}
                     className="bg-slate-800/50 border-2 border-slate-700 rounded-lg p-6 space-y-3"
                   >
-                    <h3 className="text-yellow-300 font-bold uppercase tracking-wide mb-4">Résumé de la quête</h3>
+                    <h3 className="text-yellow-300 font-bold uppercase tracking-wide mb-4">
+                      Résumé de la quête
+                    </h3>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-300">Combats gagnés :</span>
                       <span className="text-white font-bold text-xl">{exerciseCount}</span>
@@ -788,7 +830,8 @@ export default function Session() {
                     className="bg-indigo-900/30 border border-indigo-600/50 rounded-lg p-4"
                   >
                     <p className="text-indigo-300 text-sm">
-                      💡 Astuce : Visite la boutique pour acheter une Queue de Pikachu et augmenter ton nombre de PV max !
+                      💡 Astuce : Visite la boutique pour acheter une Queue de Pikachu et augmenter
+                      ton nombre de PV max !
                     </p>
                   </motion.div>
 

@@ -4,16 +4,37 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
-  envDir: '../../',  // Load .env from monorepo root
+  envDir: '../../', // Load .env from monorepo root
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          'ui-vendor': ['framer-motion', 'lucide-react'],
+          charts: ['recharts'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600, // Increase limit slightly
+  },
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-512x512-maskable.png'],
+      includeAssets: [
+        'favicon.ico',
+        'apple-touch-icon.png',
+        'icon.svg',
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+        'pwa-512x512-maskable.png',
+      ],
       manifest: {
         name: 'Math Quest - Aventure Mathématique',
         short_name: 'Math Quest',
-        description: 'Application RPG d\'apprentissage des mathématiques pour collégiens',
+        description: "Application RPG d'apprentissage des mathématiques pour collégiens",
         theme_color: '#0f172a', // Dark slate background
         background_color: '#0f172a',
         display: 'standalone',
@@ -85,7 +106,7 @@ export default defineConfig({
   },
   server: {
     host: true, // Expose sur le réseau local
-    port: 3000,
+    port: 3007,
     fs: {
       // Allow serving files from the monorepo root
       allow: ['../..'],

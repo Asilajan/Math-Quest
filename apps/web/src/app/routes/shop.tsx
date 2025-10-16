@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RPGCard } from '@/components/RPGCard';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { ShoppingBag, Coins, Check, Lock, Sparkles, Shield, Zap, Gift, Crown, Shirt } from 'lucide-react';
 import {
-  SHOP_CATALOG,
-  CATEGORY_LABELS,
-  RARITY_COLORS,
-  getItemById,
-  type ShopItem,
-} from '@math-app/core';
+  ShoppingBag,
+  Coins,
+  Check,
+  Lock,
+  Sparkles,
+  Shield,
+  Zap,
+  Gift,
+  Crown,
+  Shirt,
+} from 'lucide-react';
+import { SHOP_CATALOG, CATEGORY_LABELS, RARITY_COLORS, type ShopItem } from '@math-app/core';
 
 export default function Shop() {
   const { character, purchaseItem, increaseMaxHP } = useCharacter();
@@ -45,9 +50,10 @@ export default function Shop() {
     }
   };
 
-  const filteredItems = selectedCategory === 'all'
-    ? SHOP_CATALOG
-    : SHOP_CATALOG.filter(item => item.category === selectedCategory);
+  const filteredItems =
+    selectedCategory === 'all'
+      ? SHOP_CATALOG
+      : SHOP_CATALOG.filter((item) => item.category === selectedCategory);
 
   const categories: Array<ShopItem['category'] | 'all'> = [
     'all',
@@ -61,14 +67,22 @@ export default function Shop() {
 
   const getCategoryIcon = (category: ShopItem['category'] | 'all') => {
     switch (category) {
-      case 'all': return <ShoppingBag size={18} />;
-      case 'weapon': return <Zap size={18} />;
-      case 'armor': return <Shield size={18} />;
-      case 'power': return <Sparkles size={18} />;
-      case 'bonus': return <Gift size={18} />;
-      case 'hat': return <Crown size={18} />;
-      case 'body': return <Shirt size={18} />;
-      default: return <ShoppingBag size={18} />;
+      case 'all':
+        return <ShoppingBag size={18} />;
+      case 'weapon':
+        return <Zap size={18} />;
+      case 'armor':
+        return <Shield size={18} />;
+      case 'power':
+        return <Sparkles size={18} />;
+      case 'bonus':
+        return <Gift size={18} />;
+      case 'hat':
+        return <Crown size={18} />;
+      case 'body':
+        return <Shirt size={18} />;
+      default:
+        return <ShoppingBag size={18} />;
     }
   };
 
@@ -80,10 +94,7 @@ export default function Shop() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <RPGCard variant="gold" glow>
           <div className="p-6">
             <div className="flex items-center justify-between">
@@ -95,8 +106,12 @@ export default function Shop() {
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">Boutique Magique</h1>
-                  <p className="text-yellow-100/70 mt-1">Améliore ton équipement et débloquer de nouveaux pouvoirs !</p>
+                  <h1 className="text-3xl font-bold text-yellow-200 tracking-wide uppercase">
+                    Boutique Magique
+                  </h1>
+                  <p className="text-yellow-100/70 mt-1">
+                    Améliore ton équipement et débloquer de nouveaux pouvoirs !
+                  </p>
                 </div>
               </div>
               <div className="relative">
@@ -123,7 +138,9 @@ export default function Shop() {
         <RPGCard>
           <div className="p-4">
             <div className="flex items-center gap-3 flex-wrap justify-center">
-              <span className="text-sm font-bold text-slate-200 uppercase tracking-wide">Catégorie :</span>
+              <span className="text-sm font-bold text-slate-200 uppercase tracking-wide">
+                Catégorie :
+              </span>
               {categories.map((category) => (
                 <button
                   key={category}
@@ -205,7 +222,15 @@ export default function Shop() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
             >
-              <RPGCard variant={item.rarity === 'legendary' ? 'gold' : item.rarity === 'epic' ? 'silver' : 'bronze'}>
+              <RPGCard
+                variant={
+                  item.rarity === 'legendary'
+                    ? 'gold'
+                    : item.rarity === 'epic'
+                      ? 'silver'
+                      : 'bronze'
+                }
+              >
                 <div className="p-5">
                   {/* Item Header */}
                   <div className="flex items-start justify-between mb-3">
@@ -215,7 +240,9 @@ export default function Shop() {
                       </div>
                       <div>
                         <h3 className={`font-bold text-lg ${rarityColor}`}>{item.name}</h3>
-                        <p className={`text-xs uppercase font-semibold ${rarityColor}`}>{item.rarity}</p>
+                        <p className={`text-xs uppercase font-semibold ${rarityColor}`}>
+                          {item.rarity}
+                        </p>
                       </div>
                     </div>
                     {isOwned && (
@@ -231,8 +258,12 @@ export default function Shop() {
                   {/* Bonus Effect */}
                   {item.bonusEffect && (
                     <div className="bg-indigo-900/30 border border-indigo-600/50 rounded-lg p-3 mb-3">
-                      <p className="text-indigo-300 text-xs font-semibold uppercase mb-1">Effet bonus</p>
-                      <p className="text-indigo-200 text-sm">{item.bonusEffect.description || `+${item.bonusEffect.value}%`}</p>
+                      <p className="text-indigo-300 text-xs font-semibold uppercase mb-1">
+                        Effet bonus
+                      </p>
+                      <p className="text-indigo-200 text-sm">
+                        {item.bonusEffect.description || `+${item.bonusEffect.value}%`}
+                      </p>
                     </div>
                   )}
 
@@ -249,8 +280,8 @@ export default function Shop() {
                         isOwned
                           ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
                           : !canAfford
-                          ? 'bg-red-900/50 text-red-300 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white shadow-lg hover:shadow-green-500/50 hover:scale-105 active:scale-95'
+                            ? 'bg-red-900/50 text-red-300 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white shadow-lg hover:shadow-green-500/50 hover:scale-105 active:scale-95'
                       }`}
                     >
                       {isOwned ? (
@@ -285,8 +316,12 @@ export default function Shop() {
           <RPGCard>
             <div className="p-12">
               <ShoppingBag className="mx-auto text-slate-600 mb-4" size={64} />
-              <h3 className="text-2xl font-bold text-slate-400 mb-2">Aucun item dans cette catégorie</h3>
-              <p className="text-slate-500">Sélectionne une autre catégorie pour voir les items disponibles.</p>
+              <h3 className="text-2xl font-bold text-slate-400 mb-2">
+                Aucun item dans cette catégorie
+              </h3>
+              <p className="text-slate-500">
+                Sélectionne une autre catégorie pour voir les items disponibles.
+              </p>
             </div>
           </RPGCard>
         </motion.div>

@@ -164,7 +164,7 @@ export function genPythagoreanTheorem(seed: number, difficulty: number): Geometr
   const clampedDifficulty = Math.max(0, Math.min(10, difficulty));
 
   let a: number, b: number, c: number;
-  let findHypotenuse = randomInt(rng, 0, 1) === 1;
+  const findHypotenuse = randomInt(rng, 0, 1) === 1;
 
   if (clampedDifficulty <= 3) {
     // Easy: Pythagorean triples
@@ -220,23 +220,20 @@ export function genAngleSumTriangle(seed: number, difficulty: number): GeometryE
   const rng = createRNG(seed);
   const clampedDifficulty = Math.max(0, Math.min(10, difficulty));
 
-  let angle1: number, angle2: number, angle3: number;
+  let angle1: number, angle2: number;
 
   if (clampedDifficulty <= 3) {
     // Easy: simple angles
     angle1 = randomInt(rng, 30, 80);
     angle2 = randomInt(rng, 30, 80);
-    angle3 = 180 - angle1 - angle2;
   } else if (clampedDifficulty <= 7) {
     // Medium: one angle is given as an expression
     angle1 = randomInt(rng, 40, 70);
     angle2 = randomInt(rng, 40, 70);
-    angle3 = 180 - angle1 - angle2;
   } else {
     // Hard: complex angles
     angle1 = randomInt(rng, 35, 75);
     angle2 = randomInt(rng, 35, 75);
-    angle3 = 180 - angle1 - angle2;
   }
 
   const question = `Dans un triangle, deux angles mesurent ${angle1}° et ${angle2}°. Calcule la mesure du troisième angle.`;
