@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { PlayerCharacter } from '@math-app/core';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -150,7 +151,7 @@ export async function getCharacter(userId: string) {
 /**
  * Update character data in Firestore
  */
-export async function updateCharacter(userId: string, characterData: Record<string, unknown>) {
+export async function updateCharacter(userId: string, characterData: Partial<PlayerCharacter>) {
   const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
   const characterRef = doc(db, 'users', userId, 'game', 'character');
   await setDoc(
@@ -168,14 +169,14 @@ export async function updateCharacter(userId: string, characterData: Record<stri
  */
 export async function onCharacterChange(
   userId: string,
-  callback: (character: Record<string, unknown>) => void
+  callback: (character: Partial<PlayerCharacter>) => void
 ) {
   const { doc, onSnapshot } = await import('firebase/firestore');
   const characterRef = doc(db, 'users', userId, 'game', 'character');
 
   return onSnapshot(characterRef, (docSnap) => {
     if (docSnap.exists()) {
-      callback(docSnap.data());
+      callback(docSnap.data() as Partial<PlayerCharacter>);
     }
   });
 }
