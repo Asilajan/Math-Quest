@@ -5,6 +5,7 @@ import { RPGCard } from '@/components/RPGCard';
 import { SimpleExerciseDisplay } from '@/components/SimpleExerciseDisplay';
 import { HintDrawer } from '@/components/HintDrawer';
 import { useCharacter } from '@/contexts/CharacterContext';
+import { generateChoices, type MultipleChoiceOptions } from '@/utils/generateChoices';
 import {
   Trophy,
   Clock,
@@ -81,6 +82,9 @@ export default function Session() {
   const [exerciseType, setExerciseType] = useState<ExerciseType>('fractions');
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [correctSolution, setCorrectSolution] = useState<string>('');
+  const [multipleChoiceOptions, setMultipleChoiceOptions] = useState<MultipleChoiceOptions | null>(
+    null
+  );
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
   const [exerciseCount, setExerciseCount] = useState(0);
@@ -215,6 +219,15 @@ export default function Session() {
     setFeedback(null);
     setStartTime(Date.now());
     setHintsUsed(0);
+
+    // 40% chance de générer un QCM au lieu d'un input texte
+    const useMultipleChoice = Math.random() < 0.4;
+    if (useMultipleChoice) {
+      const choices = generateChoices(newExercise, solution);
+      setMultipleChoiceOptions(choices);
+    } else {
+      setMultipleChoiceOptions(null);
+    }
   };
 
   const handleValidate = async (userAnswer: string) => {
@@ -638,6 +651,7 @@ export default function Session() {
           hp={character.hp}
           maxHp={character.maxHp}
           difficulty={exercise.difficulty}
+          multipleChoice={multipleChoiceOptions}
         />
       </motion.div>
 
